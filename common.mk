@@ -172,6 +172,7 @@ PRODUCT_PACKAGES += \
     init.oem.debug.rc \
     init.oem.rc \
     init.oem_ftm.rc \
+    init.opcamera.rc \
     init.qcom.class_core.sh \
     init.qcom.coex.sh \
     init.qcom.early_boot.sh \
@@ -198,6 +199,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/component-overrides.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sysconfig/component-overrides.xml
 
+# Device Settings
+PRODUCT_PACKAGES += \
+    DeviceSettings
+    
 # Display
 PRODUCT_PACKAGES += \
     android.hardware.graphics.composer@2.4-service \
@@ -449,8 +454,7 @@ PRODUCT_PACKAGES += \
 
 # tri-state key
 PRODUCT_PACKAGES += \
-    KeyHandler \
-    tri-state-key-calibrate
+    tri-state-key_daemon.vendor
 
 # Trust HAL
 PRODUCT_PACKAGES += \
