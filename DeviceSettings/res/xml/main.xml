@@ -60,12 +60,6 @@
             android:icon="@drawable/rr_autohbm_icon"
             android:title="@string/hbm_autobrightness_title" />
             
-       <org.lineageos.device.DeviceSettings.HBMAutobrightnessThresholdPreference
-            android:key="hbm_autobrightness_threshould"
-            android:title="@string/hbm_autobrightness_threshold_title"
-            android:icon="@drawable/rr_autohbm_icon"
-            android:summary="@string/hbm_autobrightness_threshold_summary" />
-
     </PreferenceCategory>
 
     <PreferenceCategory
