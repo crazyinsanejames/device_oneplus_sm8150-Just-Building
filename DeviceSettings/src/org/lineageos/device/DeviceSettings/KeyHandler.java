@@ -26,8 +26,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.database.ContentObserver;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
@@ -37,8 +35,6 @@ import android.os.FileObserver;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.os.PowerManager;
-import android.os.PowerManager.WakeLock;
 import android.os.RemoteException;
 import android.os.SystemClock;
 import android.os.SystemProperties;
@@ -51,9 +47,6 @@ import android.util.SparseIntArray;
 import android.view.KeyEvent;
 
 import com.android.internal.os.DeviceKeyHandler;
-import com.android.internal.util.ArrayUtils;
-
-import org.lineageos.device.DeviceSettings.Constants;
 
 import vendor.oneplus.hardware.camera.V1_0.IOnePlusCameraProvider;
 
@@ -61,7 +54,6 @@ public class KeyHandler implements DeviceKeyHandler {
 
     private static final String TAG = KeyHandler.class.getSimpleName();
     private static final boolean DEBUG = false;
-    private static final int GESTURE_REQUEST = 1;
     private static String FPNAV_ENABLED_PROP = "sys.fpnav.enabled";
     private static String NIGHT_MODE_ENABLED_PROP = "sys.night_mode.enabled";
     private static String NIGHT_MODE_COLOR_TEMPERATURE_PROP = "sys.night_mode.color_temperature";
@@ -93,17 +85,10 @@ public class KeyHandler implements DeviceKeyHandler {
     public static final String CLIENT_PACKAGE_PATH = "/data/misc/xtended/client_package_name";
 
     private final Context mContext;
-    private final PowerManager mPowerManager;
     private final NotificationManager mNotificationManager;
     private final AudioManager mAudioManager;
-    private SensorManager mSensorManager;
-    private Sensor mProximitySensor;
     private Vibrator mVibrator;
-    WakeLock mProximityWakeLock;
-    WakeLock mGestureWakeLock;
-    private int mProximityTimeOut;
     private int mPrevKeyCode = 0;
-    private boolean mProximityWakeSupported;
     private boolean mDispOn;
     private ClientPackageNameObserver mClientObserver;
     private IOnePlusCameraProvider mProvider;
@@ -127,12 +112,9 @@ public class KeyHandler implements DeviceKeyHandler {
         mContext = context; 
         mHandler = new Handler(Looper.getMainLooper());
         mDispOn = true;
-        mPowerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         mNotificationManager
                 = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        mGestureWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
-                "GestureWakeLock");
 
         mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         if (mVibrator == null || !mVibrator.hasVibrator()) {
@@ -213,7 +195,7 @@ public class KeyHandler implements DeviceKeyHandler {
         int scanCode = event.getScanCode();
         String keyCode = Constants.sKeyMap.get(scanCode);
 
-        int keyCodeValue = 0;
+        int keyCodeValue;
         try {
             keyCodeValue = Constants.getPreferenceInt(mContext, keyCode);
         } catch (Exception e) {
@@ -276,14 +258,6 @@ public class KeyHandler implements DeviceKeyHandler {
         if (mVibrator != null && mVibrator.hasVibrator() && effect != -1) {
             mVibrator.vibrate(VibrationEffect.get(effect));
         }
-    }
-
-    public void handleNavbarToggle(boolean enabled) {
-        SystemProperties.set(FPNAV_ENABLED_PROP, enabled ? "0" : "1");
-    }
-
-    public boolean canHandleKeyEvent(KeyEvent event) {
-        return false;
     }
 
     private void onDisplayOn() {
