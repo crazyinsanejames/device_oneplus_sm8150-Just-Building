@@ -401,7 +401,7 @@ vendor/lib/egl/libEGL_adreno.so|b648bf2510a74c9e3f3e90ccd59583ac4f4557ff
 vendor/lib/egl/libGLESv1_CM_adreno.so|2ed252a7049e934d832f01413a6eb83dca51a1c8
 vendor/lib/egl/libGLESv2_adreno.so|4376838ca36d240b727f58617eeea57c773490ce
 vendor/lib/egl/libq3dtools_adreno.so|61eed4e6e6754130a10526d157f4d06db7886d6d
-vendor/lib/egl/libq3dtools_esx.so|1b3e24825addd0ced7c2b5fe2c86420ee30e4531
+vendor/lib/egl/libq3dtools_esx.so
 vendor/lib/libadreno_utils.so|2c10296084d6b9dd349c442db37cf033948943ea
 vendor/lib/libC2D2.so|56e216061023c0de1c1e12d5a17afb265774f70b
 vendor/lib/libc2d30_bltlib.so|117f775a4a61647b3628d9cfd64a05bef0646a14
@@ -413,8 +413,8 @@ vendor/lib/libllvm-qcom.so|48a1a8be75ea096e5bfa7d8fb71459c0b18755cc
 vendor/lib/libOpenCL.so|312fd22f935a9cab763769a8fc7a8435ae1d1e2f
 vendor/lib/libVkLayer_q3dtools.so|bff177896382704332ae0bd05ee776165fd1439f
 vendor/lib64/egl/eglSubDriverAndroid.so|89d44cb02c3cd8e042aa2ef32b16fac37f260d6f
-vendor/lib64/egl/libEGL_adreno.so|985028da10f1ceb5dea59f83681e5765e552d1b4
-vendor/lib64/egl/libGLESv1_CM_adreno.so|8ab392439524b532ea8560ceea8e9f99b40eae37
+vendor/lib64/egl/libEGL_adreno.so
+vendor/lib64/egl/libGLESv1_CM_adreno.so
 vendor/lib64/egl/libGLESv2_adreno.so|65c23882fbe0a36ef800c397134d4aefcc368e5f
 vendor/lib64/egl/libq3dtools_adreno.so|54102dad591413ab03ec077b286b5a55ab33a235
 vendor/lib64/egl/libq3dtools_esx.so|e49ff2f58072cd0a16a8f3e7d8bb00f2821cbfa4
@@ -430,12 +430,12 @@ vendor/lib64/libOpenCL.so|504d75263d6443c9f5e8d122fb1f96c3f1521b66
 vendor/lib64/libVkLayer_q3dtools.so|635beb4a5158aa0c72696d0c90ba4e345a33670c
 
 # Graphics (Adreno firmware)
-vendor/firmware/a630_gmu.bin|32bb4acc7767c47ddb487ed7cb998d465ee462f2
-vendor/firmware/a630_sqe.fw|e25094f97b44244775cc38a9d909fba6bd4cf76b
-vendor/firmware/a640_gmu.bin|fb1eab0dd5f313abf31441e2209c9398da7df98b
-vendor/firmware/a640_zap.b00|7afc31984d7eeacdd0fc78118ad8fa46c9b3e4ee
+vendor/firmware/a630_gmu.bin
+vendor/firmware/a630_sqe.fw
+vendor/firmware/a640_gmu.bin
+vendor/firmware/a640_zap.b00
 vendor/firmware/a640_zap.b01|004f4f23919ef8158736532747f119d5040570e1
-vendor/firmware/a640_zap.b02|27d26ca0ae982c065fb7ab58be73bf3ca2e8bdf3
+vendor/firmware/a640_zap.b02
 vendor/firmware/a640_zap.elf|ff4a0966e003de226e655b69f9eaa84ce6b09536
 vendor/firmware/a640_zap.mdt|c0b70f26ad6e9332809e9826418da8ccfe29843e
 
