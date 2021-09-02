@@ -90,4 +90,8 @@
          Should be enabled for OLED devices to reduce/prevent burn in on the status bar
          and on the navigation bar and disabled for all other devices. -->
     <bool name="config_statusBarBurnInProtection">true</bool>
+    
+    <!-- Whether device supports WakeUpProximity -->
+    <bool name="config_deviceHaveWakeUpProximity">true</bool>
+
 </resources>
