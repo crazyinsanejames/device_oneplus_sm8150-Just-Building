@@ -15,7 +15,6 @@
     limitations under the License.
 -->
 <resources>
-    <!-- Battery percentage position in AOD -->
-    <dimen name="keyguard_indication_margin_bottom_fingerprint_in_display">8dp</dimen>
+    <!-- Battery bar width -->
     <dimen name="battery_bar_view_height">3dp</dimen>
 </resources>
