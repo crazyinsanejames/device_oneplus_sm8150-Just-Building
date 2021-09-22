@@ -24,4 +24,7 @@
     
     <!-- Defines the custom tilt sensor used by various OEMs like OnePlus-->
     <string name="pickup_sensor" translatable="false">oneplus.sensor.op_motion_detect</string>
+    
+    <!-- Disable System Info -->
+    <bool name="enable_SystemInfo">false</bool>
 </resources>
