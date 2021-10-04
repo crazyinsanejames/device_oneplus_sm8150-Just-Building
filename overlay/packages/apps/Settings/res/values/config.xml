@@ -24,5 +24,23 @@
          4 = front (FOD)
     -->
     <integer name="config_fingerprintSensorLocation">4</integer>
+    
+    <!-- Whether to show min refresh rate in display settings -->
+    <bool name="config_show_refresh_rate_controls">true</bool>
+    
+    <!-- Disable Battery health services as It's enable by default in our sources  -->
+    <bool name="config_supportBatteryHealth">false</bool>
+    
+    <!-- Defines the custom tilt sensor used by various OEMs like OnePlus-->
+    <string name="pickup_sensor" translatable="false">oneplus.sensor.op_motion_detect</string>
+    
+    <!-- Disable System Info -->
+    <bool name="enable_SystemInfo">false</bool>
+    
+    <!-- Whether or not the device is capable of multiple levels of vibration intensity.
+         Note that this is different from whether it can control the vibration amplitude as some
+         devices will be able to vary their amplitude but do not possess enough dynamic range to
+         have distinct intensity levels -->
+    <bool name="config_vibration_supports_multiple_intensities">true</bool>
 
 </resources>
