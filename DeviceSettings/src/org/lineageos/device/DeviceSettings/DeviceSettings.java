@@ -53,7 +53,6 @@ public class DeviceSettings extends PreferenceFragment
     public static final String KEY_SRGB_SWITCH = "srgb";
     public static final String KEY_HBM_SWITCH = "hbm";
     public static final String KEY_HBM_AUTOBRIGHTNESS_SWITCH = "hbm_autobrightness";
-    public static final String KEY_DC_SWITCH = "dc";
     public static final String KEY_DCI_SWITCH = "dci";
     public static final String KEY_WIDECOLOR_SWITCH = "widecolor";
     public static final String KEY_NATURAL_SWITCH = "natural";
@@ -62,7 +61,6 @@ public class DeviceSettings extends PreferenceFragment
     public static final String KEY_SETTINGS_PREFIX = "device_setting_";
     
     private static TwoStatePreference mHBMAutobrightnessSwitch;
-    private static TwoStatePreference mDCModeSwitch;
     private ListPreference mTopKeyPref;
     private ListPreference mMiddleKeyPref;
     private ListPreference mBottomKeyPref;
@@ -96,11 +94,6 @@ public class DeviceSettings extends PreferenceFragment
                 getContext()).getBoolean(DeviceSettings.KEY_HBM_AUTOBRIGHTNESS_SWITCH, false));
         mHBMAutobrightnessSwitch.setOnPreferenceChangeListener(this);
  
-        mDCModeSwitch = (TwoStatePreference) findPreference(KEY_DC_SWITCH);
-        mDCModeSwitch.setEnabled(DCModeSwitch.isSupported());
-        mDCModeSwitch.setChecked(DCModeSwitch.isCurrentlyEnabled(this.getContext()));
-        mDCModeSwitch.setOnPreferenceChangeListener(new DCModeSwitch());
-
     }
 
     @Override
