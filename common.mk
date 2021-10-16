@@ -243,6 +243,12 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     fastbootd
 
+# Fingerprint
+PRODUCT_PACKAGES += \
+    android.hardware.biometrics.fingerprint@2.1-service.oneplus \
+    vendor.lineage.biometrics.fingerprint.inscreen@1.0-service.oneplus \
+    vendor.oneplus.hardware.display@1.0.vendor
+
 # GPS
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/gps/apdr.conf:$(TARGET_COPY_OUT_VENDOR)/etc/apdr.conf \
