@@ -500,19 +500,9 @@
 
     <!-- Smart charging -->
     <bool name="config_smartChargingAvailable">true</bool>
-
-    <!-- Controls the navigation bar interaction mode:
-         0: 3 button mode (back, home, overview buttons)
-         1: 2 button mode (back, home buttons + swipe up for overview)
-         2: gestures only for back, home and overview -->
-    <integer name="config_navBarInteractionMode">2</integer>
-    
+  
     <!-- Whether device supports sensor based doze customizations -->
     <bool name="config_dozePulsePickup">true</bool>
     <bool name="config_dozePulseTilt">true</bool>
-    <bool name="config_deviceHaveWakeUpProximity">true</bool>
     
-    <!-- Defines the sysfs attribute path used by the device to enable/disable DC dimming. -->
-    <string name="config_deviceDcDimmingSysfsNode">/sys/class/drm/card0-DSI-1/dimlayer_bl_en</string>
-   
 </resources>

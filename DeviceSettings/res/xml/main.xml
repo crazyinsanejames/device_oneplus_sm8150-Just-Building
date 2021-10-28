@@ -42,15 +42,11 @@
                     android:targetClass="org.lineageos.device.DeviceSettings.PanelSettingsActivity" />
         </Preference>
         
-        <Preference
-            android:key="dc_dim"
-            android:enabled="true"
+        <SwitchPreference
+            android:key="dc"
             android:icon="@drawable/rr_dc_dim_icon"
             android:summary="@string/dc_mode_summary"
-            android:title="@string/dc_mode_title">
-            <intent
-                    android:action="android.settings.DC_DIMMING_SETTINGS" /> 
-         </Preference>
+            android:title="@string/dc_mode_title" />
             
         <SwitchPreference
             android:key="hbm_autobrightness"
