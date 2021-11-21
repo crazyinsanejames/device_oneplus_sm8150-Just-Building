@@ -153,11 +153,15 @@ PRODUCT_PACKAGES += \
 # Camera
 PRODUCT_PACKAGES += \
     android.frameworks.displayservice@1.0 \
+    GoogleCamera \
     libxml2 \
-    Snap \
     vendor.oneplus.hardware.camera@1.0.vendor:64 \
     vendor.qti.hardware.camera.device@1.0.vendor:64
 
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/GoogleCamera/system/etc/permissions/com.google.android.GoogleCamera.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/com.google.android.GoogleCamera.xml \
+    $(LOCAL_PATH)/GoogleCamera/system/etc/configs/hiddenapi-package-whitelist-GoogleCamera.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/hiddenapi-package-whitelist-GoogleCamera.xml
+    
 # Common init scripts
 PRODUCT_PACKAGES += \
     init.class_main.sh \
