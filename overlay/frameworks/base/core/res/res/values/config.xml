@@ -434,4 +434,7 @@
      <!-- How long it takes for the HW to start illuminating after the illuminati -->
      <integer name="config_udfps_illumination_transition_ms">0</integer>
 
+    <!-- Is the battery LED intrusive? Used to decide if there should be a disable option -->
+    <bool name="config_intrusiveBatteryLed">false</bool>
+    
 </resources>
