@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2017 The OmniROM Project
+* Copyright (C) 2018 The OmniROM Project
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,12 +17,10 @@
 */
 package org.lineageos.device.DeviceSettings;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.SystemProperties;
 import androidx.preference.Preference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
-import androidx.preference.PreferenceManager;
+
+import org.lineageos.device.DeviceSettings.Utils;
 
 public class VividModeSwitch implements OnPreferenceChangeListener {
 
@@ -39,7 +37,7 @@ public class VividModeSwitch implements OnPreferenceChangeListener {
         return Utils.fileWritable(getFile());
     }
 
-    public static boolean isCurrentlyEnabled(Context context) {
+    public static boolean isCurrentlyEnabled() {
         return Utils.getFileValueAsBoolean(getFile(), false);
     }
 

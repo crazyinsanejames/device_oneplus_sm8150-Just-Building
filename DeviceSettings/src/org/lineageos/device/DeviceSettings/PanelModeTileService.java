@@ -17,11 +17,9 @@
 */
 package org.lineageos.device.DeviceSettings;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.service.quicksettings.TileService;
 
-@TargetApi(24)
 public class PanelModeTileService extends TileService {
     @Override
     public void onDestroy() {

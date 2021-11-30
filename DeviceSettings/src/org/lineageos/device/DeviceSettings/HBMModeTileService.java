@@ -24,6 +24,9 @@ import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 import androidx.preference.PreferenceManager;
 
+import org.lineageos.device.DeviceSettings.DeviceSettings;
+import org.lineageos.device.DeviceSettings.HBMModeSwitch;
+
 @TargetApi(24)
 public class HBMModeTileService extends TileService {
     private boolean enabled = false;
