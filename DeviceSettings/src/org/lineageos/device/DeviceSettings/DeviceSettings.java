@@ -46,6 +46,8 @@ import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.TwoStatePreference;
 
+import org.lineageos.device.DeviceSettings.R;
+
 public class DeviceSettings extends PreferenceFragment
         implements Preference.OnPreferenceChangeListener {
 
@@ -98,7 +100,7 @@ public class DeviceSettings extends PreferenceFragment
  
         mDCModeSwitch = (TwoStatePreference) findPreference(KEY_DC_SWITCH);
         mDCModeSwitch.setEnabled(DCModeSwitch.isSupported());
-        mDCModeSwitch.setChecked(DCModeSwitch.isCurrentlyEnabled(this.getContext()));
+        mDCModeSwitch.setChecked(DCModeSwitch.isCurrentlyEnabled());
         mDCModeSwitch.setOnPreferenceChangeListener(new DCModeSwitch());
 
     }

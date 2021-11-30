@@ -26,6 +26,7 @@ import android.text.TextUtils;
 import androidx.preference.PreferenceManager;
 
 import org.lineageos.device.DeviceSettings.TouchscreenGestureSettings;
+import org.lineageos.device.DeviceSettings.R;
 
 public class Startup extends BroadcastReceiver {
 
