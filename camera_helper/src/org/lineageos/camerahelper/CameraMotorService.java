@@ -61,7 +61,7 @@ public class CameraMotorService extends Service implements Handler.Callback {
 
                 @Override
                 public void onCameraOpened(@NonNull String cameraId, @NonNull String packageId) {
-                    super.onCameraClosed(cameraId);
+                    super.onCameraOpened(cameraId, packageId);
 
                     if (cameraId.equals(FRONT_CAMERA_ID)) {
                         mOpenEvent = SystemClock.elapsedRealtime();
