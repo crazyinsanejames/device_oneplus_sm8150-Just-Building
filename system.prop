@@ -71,6 +71,9 @@ ro.nfc.port=I2C
 # Perf
 ro.vendor.qti.sys.fw.bg_apps_limit=60
 
+# Processor Model
+ro.processor.model=SM8150
+
 # Radio
 DEVICE_PROVISIONED=1
 persist.vendor.data.mode=concurrent
