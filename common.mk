@@ -421,6 +421,9 @@ PRODUCT_PACKAGES_DEBUG += \
 PRODUCT_PACKAGES += \
     android.hardware.usb@1.0-service
 
+# UDFPS animations
+EXTRA_UDFPS_ANIMATIONS := true
+
 # VNDK
 include $(LOCAL_PATH)/interfaces-vndk.mk
 
