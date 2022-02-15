@@ -583,7 +583,6 @@ vendor/bin/hw/android.hardware.nfc@1.2-service
 vendor/etc/init/android.hardware.nfc@1.2-service.rc
 vendor/etc/permissions/com.nxp.mifare.xml
 vendor/etc/libese-nxp.conf
-vendor/etc/libnfc-nci.conf
 vendor/etc/libnfc-nci_beijingbus.conf
 vendor/etc/libnfc-nci_changancard.conf
 vendor/etc/libnfc-nci_productline.conf
@@ -592,7 +591,6 @@ vendor/etc/libnfc-nci_suzhoutong.conf
 vendor/etc/libnfc-nci_wuhantong.conf
 vendor/etc/libnfc-nci_yangchengtong.conf
 vendor/etc/libnfc-nci_zhengzhoubus.conf
-vendor/etc/libnfc-nxp.conf
 vendor/etc/libnfc-nxp_beijingbus.conf
 vendor/etc/libnfc-nxp_changancard.conf
 vendor/etc/libnfc-nxp_noeSE.conf
