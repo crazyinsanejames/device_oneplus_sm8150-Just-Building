@@ -3962,6 +3962,109 @@ case "$target" in
             ;;
         esac
 
+        #power/perf tunings for khaje
+        case "$soc_id" in
+                 "518" )
+
+            # Core control parameters on big
+            echo 0 > /sys/devices/system/cpu/cpu0/core_ctl/enable
+            echo 2 > /sys/devices/system/cpu/cpu4/core_ctl/min_cpus
+            echo 40 > /sys/devices/system/cpu/cpu4/core_ctl/busy_down_thres
+            echo 60 > /sys/devices/system/cpu/cpu4/core_ctl/busy_up_thres
+            echo 100 > /sys/devices/system/cpu/cpu4/core_ctl/offline_delay_ms
+            echo 4 > /sys/devices/system/cpu/cpu4/core_ctl/task_thres
+
+            # Setting b.L scheduler parameters
+            echo 65 > /proc/sys/kernel/sched_downmigrate
+            echo 71 > /proc/sys/kernel/sched_upmigrate
+            echo 85 > /proc/sys/kernel/sched_group_downmigrate
+            echo 100 > /proc/sys/kernel/sched_group_upmigrate
+
+            # cpuset settings
+            echo 0-3 > /dev/cpuset/background/cpus
+            echo 0-3 > /dev/cpuset/system-background/cpus
+
+
+            # configure governor settings for little cluster
+            echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+            echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us
+            echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us
+            echo 1516800 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_freq
+            echo 691200 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+            echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/rtg_boost_freq
+
+            # configure governor settings for big cluster
+            echo "schedutil" > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
+            echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/up_rate_limit_us
+            echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/down_rate_limit_us
+            echo 1344000 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/hispeed_freq
+            echo 1056000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+            echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/rtg_boost_freq
+
+            echo "0:1190000" > /sys/devices/system/cpu/cpu_boost/input_boost_freq
+            echo 80 > /sys/devices/system/cpu/cpu_boost/input_boost_ms
+
+	    echo 1 > /proc/sys/kernel/sched_walt_rotate_big_tasks
+
+            # sched_load_boost as -6 is equivalent to target load as 85. It is per cpu tunable.
+            echo -6 >  /sys/devices/system/cpu/cpu0/sched_load_boost
+            echo -6 >  /sys/devices/system/cpu/cpu1/sched_load_boost
+            echo -6 >  /sys/devices/system/cpu/cpu2/sched_load_boost
+            echo -6 >  /sys/devices/system/cpu/cpu3/sched_load_boost
+            echo -6 >  /sys/devices/system/cpu/cpu4/sched_load_boost
+            echo -6 >  /sys/devices/system/cpu/cpu5/sched_load_boost
+            echo -6 >  /sys/devices/system/cpu/cpu6/sched_load_boost
+            echo -6 >  /sys/devices/system/cpu/cpu7/sched_load_boost
+            echo 85 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_load
+            echo 85 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/hispeed_load
+
+            # Set Memory parameters
+            configure_memory_parameters
+
+            # Enable bus-dcvs
+
+            for device in /sys/devices/platform/soc
+            do
+                for cpubw in $device/*cpu-cpu-ddr-bw/devfreq/*cpu-cpu-ddr-bw
+                do
+                    echo "bw_hwmon" > $cpubw/governor
+                    echo 50 > $cpubw/polling_interval
+                    echo 762 > $cpubw/min_freq
+                    echo "2288 3440 4173 5195 5859 7759 10322 11863 13763 15960" > $cpubw/bw_hwmon/mbps_zones
+                    echo 85 > $cpubw/bw_hwmon/io_percent
+                    echo 4 > $cpubw/bw_hwmon/sample_ms
+                    echo 90 > $cpubw/bw_hwmon/decay_rate
+                    echo 190 > $cpubw/bw_hwmon/bw_step
+                    echo 20 > $cpubw/bw_hwmon/hist_memory
+                    echo 0 > $cpubw/bw_hwmon/hyst_length
+                    echo 80 > $cpubw/bw_hwmon/down_thres
+                    echo 0 > $cpubw/bw_hwmon/guard_band_mbps
+                    echo 250 > $cpubw/bw_hwmon/up_scale
+                   echo 1600 > $cpubw/bw_hwmon/idle_mbps
+                done
+
+            done
+            # memlat specific settings are moved to seperate file under
+            # device/target specific folder
+            setprop vendor.dcvs.prop 1
+
+            # colcoation v3 disabled
+            echo 0 > /proc/sys/kernel/sched_min_task_util_for_boost
+            echo 0 > /proc/sys/kernel/sched_min_task_util_for_colocation
+
+            # Turn off scheduler boost at the end
+            echo 0 > /proc/sys/kernel/sched_boost
+
+	    echo N > /sys/module/lpm_levels/system/pwr/pwr-l2-gdhs/idle_enabled
+	    echo N > /sys/module/lpm_levels/system/perf/perf-l2-gdhs/idle_enabled
+	    echo N > /sys/module/lpm_levels/system/pwr/pwr-l2-gdhs/suspend_enabled
+            echo N > /sys/module/lpm_levels/system/perf/perf-l2-gdhs/suspend_enabled
+            # Turn on sleep modes
+            echo 0 > /sys/module/lpm_levels/parameters/sleep_disabled
+
+            ;;
+        esac
+
         # Scuba perf/power tunings
         case "$soc_id" in
              "441" )
@@ -4907,18 +5010,62 @@ case "$target" in
 	echo "0:1324800" > /sys/module/cpu_boost/parameters/input_boost_freq
 	echo 120 > /sys/module/cpu_boost/parameters/input_boost_ms
 
-	# ifdef VENDOR_EDIT
-	# simon.ma@SYSTEM, 2019/5/16, add for GCE-8382 to modify the minfree value of lmk
-	echo "18432,23040,27648,51256,150296,200640" > /sys/module/lowmemorykiller/parameters/minfree
-	# endif VENDOR_EDIT
+		# Enable bus-dcvs
+		for device in /sys/devices/platform/soc
+		do
+		    for cpubw in $device/*cpu-cpu-llcc-bw/devfreq/*cpu-cpu-llcc-bw
+		    do
+			echo "bw_hwmon" > $cpubw/governor
+			echo "2288 4577 7110 9155 12298 14236 15258" > $cpubw/bw_hwmon/mbps_zones
+			echo 4 > $cpubw/bw_hwmon/sample_ms
+			echo 50 > $cpubw/bw_hwmon/io_percent
+			echo 20 > $cpubw/bw_hwmon/hist_memory
+			echo 10 > $cpubw/bw_hwmon/hyst_length
+			echo 30 > $cpubw/bw_hwmon/down_thres
+			echo 0 > $cpubw/bw_hwmon/guard_band_mbps
+			echo 250 > $cpubw/bw_hwmon/up_scale
+			echo 1600 > $cpubw/bw_hwmon/idle_mbps
+			echo 14236 > $cpubw/max_freq
+        	        echo 40 > $cpubw/polling_interval
+		    done
 
-	# Disable wsf, beacause we are using efk.
-	# wsf Range : 1..1000 So set to bare minimum value 1.
-        echo 1 > /proc/sys/vm/watermark_scale_factor
-        #ifdef VENDOR_EDIT
-        #yankelong@BSP, 2019/5/8/, add for Enable ufs performance.
-        echo 0 > /sys/class/scsi_host/host0/../../../clkscale_enable
-        #endif VENDOR_EDIT
+		    for llccbw in $device/*cpu-llcc-ddr-bw/devfreq/*cpu-llcc-ddr-bw
+	    		do
+				echo "bw_hwmon" > $llccbw/governor
+				echo "1720 2929 3879 5931 6881 7980" > $llccbw/bw_hwmon/mbps_zones
+				echo 4 > $llccbw/bw_hwmon/sample_ms
+				echo 80 > $llccbw/bw_hwmon/io_percent
+				echo 20 > $llccbw/bw_hwmon/hist_memory
+				echo 10 > $llccbw/bw_hwmon/hyst_length
+				echo 30 > $llccbw/bw_hwmon/down_thres
+				echo 0 > $llccbw/bw_hwmon/guard_band_mbps
+				echo 250 > $llccbw/bw_hwmon/up_scale
+				echo 1600 > $llccbw/bw_hwmon/idle_mbps
+				echo 6881 > $llccbw/max_freq
+                		echo 40 > $llccbw/polling_interval
+		    done
+
+		    for npubw in $device/*npu-npu-ddr-bw/devfreq/*npu-npu-ddr-bw
+			do
+				echo 1 > /sys/devices/virtual/npu/msm_npu/pwr
+				echo "bw_hwmon" > $npubw/governor
+				echo "1720 2929 3879 5931 6881 7980" > $npubw/bw_hwmon/mbps_zones
+				echo 4 > $npubw/bw_hwmon/sample_ms
+				echo 80 > $npubw/bw_hwmon/io_percent
+				echo 20 > $npubw/bw_hwmon/hist_memory
+				echo 6  > $npubw/bw_hwmon/hyst_length
+				echo 30 > $npubw/bw_hwmon/down_thres
+				echo 0 > $npubw/bw_hwmon/guard_band_mbps
+				echo 250 > $npubw/bw_hwmon/up_scale
+				echo 0 > $npubw/bw_hwmon/idle_mbps
+		                echo 40 > $npubw/polling_interval
+				echo 0 > /sys/devices/virtual/npu/msm_npu/pwr
+	                      done
+	           done
+	fi
+	# memlat specific settings are moved to seperate file under
+	# device/target specific folder
+	setprop vendor.dcvs.prop 1
 
         echo 0-3 > /dev/cpuset/background/cpus
         echo 0-3 > /dev/cpuset/system-background/cpus
@@ -4949,64 +5096,22 @@ case "$target" in
                 echo 40 > $cpubw/polling_interval
 	    done
 
-	    for llccbw in $device/*cpu-llcc-ddr-bw/devfreq/*cpu-llcc-ddr-bw
-	    do
-		echo "bw_hwmon" > $llccbw/governor
-		echo "1720 2929 3879 5931 6881 7980" > $llccbw/bw_hwmon/mbps_zones
-		echo 4 > $llccbw/bw_hwmon/sample_ms
-		echo 80 > $llccbw/bw_hwmon/io_percent
-		echo 20 > $llccbw/bw_hwmon/hist_memory
-		echo 10 > $llccbw/bw_hwmon/hyst_length
-		echo 30 > $llccbw/bw_hwmon/down_thres
-		echo 0 > $llccbw/bw_hwmon/guard_band_mbps
-		echo 250 > $llccbw/bw_hwmon/up_scale
-		echo 1600 > $llccbw/bw_hwmon/idle_mbps
-		echo 6881 > $llccbw/max_freq
-                echo 40 > $llccbw/polling_interval
-	    done
-
-	    for npubw in $device/*npu-npu-ddr-bw/devfreq/*npu-npu-ddr-bw
-	    do
-		echo 1 > /sys/devices/virtual/npu/msm_npu/pwr
-		echo "bw_hwmon" > $npubw/governor
-		echo "1720 2929 3879 5931 6881 7980" > $npubw/bw_hwmon/mbps_zones
-		echo 4 > $npubw/bw_hwmon/sample_ms
-		echo 80 > $npubw/bw_hwmon/io_percent
-		echo 20 > $npubw/bw_hwmon/hist_memory
-		echo 6  > $npubw/bw_hwmon/hyst_length
-		echo 30 > $npubw/bw_hwmon/down_thres
-		echo 0 > $npubw/bw_hwmon/guard_band_mbps
-		echo 250 > $npubw/bw_hwmon/up_scale
-		echo 0 > $npubw/bw_hwmon/idle_mbps
-                echo 40 > $npubw/polling_interval
-		echo 0 > /sys/devices/virtual/npu/msm_npu/pwr
-	    done
-	done
-
-    # memlat specific settings are moved to seperate file under
-    # device/target specific folder
-    setprop vendor.dcvs.prop 1
-
-    if [ -f /sys/devices/soc0/hw_platform ]; then
-        hw_platform=`cat /sys/devices/soc0/hw_platform`
-    else
-        hw_platform=`cat /sys/devices/system/soc/soc0/hw_platform`
-    fi
-
-    if [ -f /sys/devices/soc0/platform_subtype_id ]; then
-        platform_subtype_id=`cat /sys/devices/soc0/platform_subtype_id`
-    fi
-
-    echo 0 > /sys/module/lpm_levels/parameters/sleep_disabled
-    configure_memory_parameters
-    # Enable memplus
-    memplus_post_config=1
-    target_type=`getprop ro.hardware.type`
-	if [ "$target_type" == "automotive" ]; then
-           # update frequencies
-           configure_automotive_sku_parameters
-	fi
-
+	    echo 0 > /sys/module/lpm_levels/parameters/sleep_disabled
+	    configure_memory_parameters
+	    target_type=`getprop ro.hardware.type`
+		if [ -f /sys/devices/soc0/soc_id ]; then
+			soc_id=`cat /sys/devices/soc0/soc_id`
+	            else
+			soc_id=`cat /sys/devices/system/soc/soc0/id`
+	            fi
+		if [ "$target_type" == "automotive" ]; then
+	           # update frequencies
+		   if [ "$soc_id" == "340" ] | [ "$soc_id" == "405" ]; then #sa8195
+			configure_automotive_sku_parameters_sa8195
+		   else #sa8155
+			configure_automotive_sku_parameters
+		   fi
+		fi
     ;;
 esac
 
