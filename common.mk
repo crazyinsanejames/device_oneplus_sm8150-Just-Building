@@ -359,6 +359,9 @@ PRODUCT_PACKAGES += \
     librmnetctl \
     libxml2 
 
+# SoC
+PROCESSOR_MODEL := SM8150
+
 # Vibrator
 PRODUCT_PACKAGES += \
     vendor.qti.hardware.vibrator.service.oneplus
