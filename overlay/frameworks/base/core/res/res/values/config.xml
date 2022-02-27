@@ -430,5 +430,8 @@
 
     <!-- Defines the sysfs attribute path used by the device to enable/disable DC dimming. -->
     <string name="config_deviceDcDimmingSysfsNode">/sys/class/drm/card0-DSI-1/dimlayer_bl_en</string>
-   
+    
+     <!-- How long it takes for the HW to start illuminating after the illuminati -->
+     <integer name="config_udfps_illumination_transition_ms">0</integer>
+
 </resources>
